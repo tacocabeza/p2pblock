@@ -1,0 +1,109 @@
+/* Add your own styles here. Use of this file should be minimized at all costs. However, if you feel the need to
+    declare your own CSS classes for a small padding fix or whatnot, this is the purpose of this file. You may be
+    tempted to go all out with the styling of your website. We encourage you not to spend the time styling the pages
+    for this class, and to spend that time on styling of your own personal webpage or side project.
+ */
+
+.lgIcon {
+  height: 36px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.smIcon {
+  height: 18px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.canyon {
+  color: #cc5430;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin: 0;
+}
+
+.alfalfa {
+  color: #C9D845;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin: 0;
+}
+
+.darkslate {
+  color: #105456;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin: 0;
+}
+
+.reservoir {
+  color: #12A4B6;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin: 0;
+}
+
+.sunshine {
+  color: #ECC530;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin: 0;
+}
+
+.searchResults {
+  max-height: 300px;
+  overflow: scroll;
+}
+.saveLoad {
+  width: 49%;
+  margin-left: 1%;
+  margin-bottom: 1px;
+}
+.deleteBtn {
+  background: white!important;
+  padding: 0!important;
+  border: none!important;
+}
+.destination {
+  width: 100%;
+  padding: 10px;
+}
+.fontBold {
+  font-weight: 600;
+}
+.drag-handle {
+  cursor: move;
+  cursor: grab;
+  padding-right: 7px;
+}
+.drag-handle:active {
+  cursor: grabbing;
+  padding-right: 7px;
+}
+.w-60 {
+  max-width: 60%;
+}
+.w-40 {
+  max-width: 40%;
+}
+.mapButton {
+  background: white!important;
+  padding: 5px!important;
+}
+.h-22px {
+  height: 22px;
+}
+.h-23px {
+  height: 23px;
+}
+.h-24px {
+  height: 24px;
+}
+.h-25px {
+  height: 25px;
+}
+.to-top-bottom {
+  float: right;
+  padding-right: 10px;
+}

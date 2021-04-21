@@ -7,7 +7,7 @@ async function main(){
 
     console.log("Account balance: ", (await deployer.getBalance().toString()));
 
-    const Hello = await ethers.getContractFactory("HelloWorld");
+    const Hello = await ethers.getContractFactory("Chat");
 
     const hi = await Hello.deploy()
 
