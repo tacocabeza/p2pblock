@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import {chat} from "../utils/constants.js";
 import {ethers} from "ethers";
 import Web3 from "web3";
+import Sidebar from "./Sidebar";
+import {Container} from "reactstrap";
+import Startchat from "./Startchat";
 
 
 export default class App extends Component {
@@ -51,6 +54,19 @@ export default class App extends Component {
     }
 
 
+    async getMsg(){
+
+        try{
+
+           console.log("last message", await this.state.contract.getLastMsg("0x58F57681d4C519Dbc30261d4cD080825A55c4380"));
+        }
+        catch (e) {
+            console.log(e)
+        }
+
+    }
+
+
 
     render() {
 
@@ -65,11 +81,18 @@ export default class App extends Component {
             console.log(e)
         }
 
-        try{
-            this.state.contract.
-        }
+        this.getMsg();
         return (
-            <h1>HI</h1>
+
+            <Container>
+
+                <Startchat></Startchat>
+
+
+            </Container>
+
+
+
         );
     }
 }
