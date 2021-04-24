@@ -60,8 +60,13 @@ export default class App extends Component {
             this.state.contract.compose("0x58F57681d4C519Dbc30261d4cD080825A55c4380","OOF");
 
 
+
         }catch (e) {
             console.log(e)
+        }
+
+        try{
+            this.state.contract.
         }
         return (
             <h1>HI</h1>
