@@ -1,10 +1,11 @@
 import React, {Component} from "react";
 
 import {ethers} from "ethers";
-import {Button, Input, Modal} from "@material-ui/core";
-import {Col, ModalBody, ModalFooter, ModalHeader, Row} from "reactstrap";
+import {Button, Input, Modal, ModalBody, ModalHeader, ModalFooter, Col} from "reactstrap";
+import ListView from "./ListView";
 
-export default class Startchat extends Component{
+
+export default class Startchat extends Component {
 
     constructor(props) {
         super(props);
@@ -18,54 +19,60 @@ export default class Startchat extends Component{
 
     }
 
-    render(){
+    render() {
 
-        return(
+        return (
             <div>
+
                 {this.renderStartChatButton()}
                 {this.renderPopUp()}
+                <ListView>
+
+                </ListView>
             </div>
+
         )
     }
 
-    renderStartChatButton(){
+    renderStartChatButton() {
 
-        return(
+        return (
             <Col>
                 <Col>
 
 
-                    <Button variant="primary" className="w-100" onClick={()=>this.togglePopUp()}>Start Chat</Button>
+                    <Button variant="contained" color="primary" className="w-100" onClick={() => this.togglePopUp()}>Start Chat</Button>
                 </Col>
 
             </Col>
         )
     }
 
-    togglePopUp(){
+    togglePopUp() {
         this.setState({isPopUp: !this.state.isPopUp});
     }
 
 
-    renderPopUp(){
+    renderPopUp() {
         return (
 
-            <Modal open={this.state.isPopUp} toggle={()=> this.togglePopUp()}>
+            <Modal  className="vertical-center" isOpen={this.state.isPopUp} toggle={() => this.togglePopUp()}>
                 <div>
 
 
-
-                    <ModalHeader>
+                    <ModalHeader c>
                         Start New Chat!
                     </ModalHeader>
 
                     <ModalBody>
-                        <Input name="toAddress" placeholder="Recipient" value={this.state.toAddress} onChange={e => this.setState({toAddress: e.target.value})}/>
-                        <Input name="msg" placeholder="message" value={this.state.msg} onChange={e=>this.setState({msg:e.target.value})}/>
+                        <Input name="toAddress" placeholder="Recipient" value={this.state.toAddress}
+                               onChange={e => this.setState({toAddress: e.target.value})}/>
+                        <Input name="msg" placeholder="message" value={this.state.msg}
+                               onChange={e => this.setState({msg: e.target.value})}/>
                     </ModalBody>
                     <ModalFooter>
 
-                        <Button color="primary" disabled={!this.state.toAddress || !this.state.msg} > Send </Button>
+                        <Button variant="contained" color="primary" disabled={!this.state.toAddress || !this.state.msg}> Send </Button>
 
 
                     </ModalFooter>
@@ -77,4 +84,14 @@ export default class Startchat extends Component{
     }
 
 
+
+
+
+
 }
+
+
+
+
+
+

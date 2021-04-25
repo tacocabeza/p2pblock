@@ -29,12 +29,31 @@ a {
   align-items: center;
 }
 
-// Map Styles
 
-.mapStyle {
+.listStyle {
   height: 69.05vh;
   width: 100%;
 }
+
+.container {
+  flex: 1;
+  backgroundColor: "#fff";
+  flexDirection: "row";
+  alignSelf: "stretch";
+}
+
+.root{
+  width: 100%;
+  maxWidth: '36ch';
+  backgroundColor: #FFFFFF;
+}
+
+
+.inline{
+  display: inline;
+}
+
+
 
 // The following variable declarations create our color theme
 
