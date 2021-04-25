@@ -42,8 +42,12 @@ export default class ListView extends Component{
 
     insertConversation(){
 
-        console.log("alias? ", this.props.alias)
-        return(
+
+
+
+
+            return(
+
 
                 <List className="root">
                     <ListItem alignItems="flex-start">
@@ -59,6 +63,7 @@ export default class ListView extends Component{
                     </ListItem>
                     <Divider variant="inset" component="li" />
                 </List>
+
             )
     }
 

@@ -77,7 +77,7 @@ export default class Page extends Component {
 
     render() {
 
-
+        /*
         try{
 
             this.state.contract.compose("0x58F57681d4C519Dbc30261d4cD080825A55c4380","OOF");
@@ -88,7 +88,9 @@ export default class Page extends Component {
             console.log(e)
         }
 
-        this.getMsg();
+         */
+
+        //this.getMsg();
         return (
             <>
                 <div ref={pageTop}/>
@@ -96,7 +98,7 @@ export default class Page extends Component {
                     <Header></Header>
 
                     <Startchat createSnackBar={this.props.createSnackBar}
-                    pageTop={pageTop} pageBottom={pageBottom} />
+                    pageTop={pageTop} pageBottom={pageBottom} contract={this.state.contract}/>
                     <Footer></Footer>
 
 
@@ -107,14 +109,5 @@ export default class Page extends Component {
         );
     }
 
-    firstMessage(){
-        try{
-            this.props.contract.compose(this.state.address, this.state.msg)
-        }
-        catch(e){
-            console.log(e)
-        }
 
-
-    }
 }

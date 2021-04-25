@@ -14,6 +14,7 @@ export default class Startchat extends Component {
             toAddress: "",
             alias: "",
             msg: "",
+            msgObject: "",
             isPopUp: false
         }
 
@@ -26,7 +27,7 @@ export default class Startchat extends Component {
 
                 {this.renderStartChatButton()}
                 {this.renderPopUp()}
-                <ListView alias={this.state.alias} msg={this.state.msg}>
+                <ListView alias={this.state.alias} msg={this.state.msg} toAddress={this.state.toAddress}>
 
                 </ListView>
             </div>
@@ -52,6 +53,16 @@ export default class Startchat extends Component {
         this.setState({isPopUp: !this.state.isPopUp});
     }
 
+    buildObjects(){
+
+        let list = [];
+
+        list.push({alias: this.state.alias, msg: this.state.msg, toAddress: this.state.toAddress});
+
+        return list;
+
+    }
+
 
     renderPopUp() {
         return (
@@ -73,7 +84,7 @@ export default class Startchat extends Component {
                     </ModalBody>
                     <ModalFooter>
 
-                        <Button variant="contained" color="primary" disabled={!this.state.toAddress || !this.state.msg}> Send </Button>
+                        <Button variant="contained" color="primary" disabled={!this.state.toAddress || !this.state.msg || !this.state.alias} onClick={() => this.compose()}> Send </Button>
 
 
                     </ModalFooter>
@@ -85,6 +96,16 @@ export default class Startchat extends Component {
 
 
 
+
+    }
+
+    compose(){
+
+        try{
+            this.props.contract.compose(this.state.toAddress, this.state.msg)
+        }catch (e) {
+            console.log(e);
+        }
 
     }
 
