@@ -26,7 +26,7 @@ export default class Startchat extends Component {
 
                 {this.renderStartChatButton()}
                 {this.renderPopUp()}
-                <ListView>
+                <ListView alias={this.state.alias} msg={this.state.msg}>
 
                 </ListView>
             </div>
@@ -69,6 +69,7 @@ export default class Startchat extends Component {
                                onChange={e => this.setState({toAddress: e.target.value})}/>
                         <Input name="msg" placeholder="message" value={this.state.msg}
                                onChange={e => this.setState({msg: e.target.value})}/>
+                        <Input name="alias" placeholder="contact name" value={this.state.alias} onChange={e => this.setState({alias:e.target.value})}/>
                     </ModalBody>
                     <ModalFooter>
 
@@ -81,10 +82,11 @@ export default class Startchat extends Component {
 
             </Modal>
         )
+
+
+
+
     }
-
-
-
 
 
 
