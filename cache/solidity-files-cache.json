@@ -1,8 +1,8 @@
 {
   "_format": "hh-sol-cache-2",
   "files": {
-    "/home/tacocabeza/WebstormProjects/p2pblock/contracts/Chat.sol": {
-      "lastModificationDate": 1618946134726,
+    "/Users/jonathanbunnell/p2pblock/contracts/Chat.sol": {
+      "lastModificationDate": 1619466398691,
       "contentHash": "a69ed6ccf6e44a4972ac5c9e700fbd77",
       "sourceName": "contracts/Chat.sol",
       "solcConfig": {
