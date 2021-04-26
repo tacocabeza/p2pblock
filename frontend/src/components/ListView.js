@@ -22,7 +22,8 @@ export default class ListView extends Component{
             toAddress: "",
             alias: "",
             lastMessage: "",
-            isMessagePopup: false
+            isMessagePopup: false,
+            selectedConversation: null,
         }
 
     }
@@ -98,6 +99,7 @@ export default class ListView extends Component{
 
 
         this.setState({isMessagePopup: true});
+        this.setState({selectedConversation: correspondences});
 
         console.log("YOOOOO", correspondences[index].toAddress);
 
@@ -105,7 +107,7 @@ export default class ListView extends Component{
 
 
 
-    buildMessageWidget(selectedMessage){
+    buildMessageWidget(){
 
 
 
