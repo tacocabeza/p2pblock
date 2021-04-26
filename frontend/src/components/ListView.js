@@ -9,6 +9,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
+import Chat from "./Chat";
+import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
 
 
 export default class ListView extends Component{
@@ -23,7 +25,7 @@ export default class ListView extends Component{
             alias: "",
             lastMessage: "",
             isMessagePopup: false,
-            selectedConversation: null,
+            selectedConversation: {},
         }
 
     }
@@ -42,6 +44,8 @@ export default class ListView extends Component{
                 <List className="root">
                     {buffer}
                 </List>
+
+                {this.renderChat()}
 
             </div>
         )
@@ -97,22 +101,55 @@ export default class ListView extends Component{
 
     handleClick(correspondences, index){
 
+        console.log("correspondences", correspondences[index]);
 
-        this.setState({isMessagePopup: true});
-        this.setState({selectedConversation: correspondences});
 
-        console.log("YOOOOO", correspondences[index].toAddress);
+        this.setState({selectedConversation: correspondences[index]});
 
+
+
+
+        this.toggleChat();
+
+    }
+
+    toggleChat(){
+    this.setState({isMessagePopup: !this.state.isMessagePopup})
     }
 
 
 
-    buildMessageWidget(){
+    renderChat(){
+
+        console.log("selected", this.state.selectedConversation);
 
 
+        console.log(this.state.isMessagePopup);
+        return (
+
+            <Modal  className="vertical-center" isOpen={this.state.isMessagePopup} toggle={() => this.toggleChat()
+            }>
+                <div>
 
 
+                    <ModalHeader>
+                        {this.state.selectedConversation.alias}
+                    </ModalHeader>
 
+                    <ModalBody>
+
+                    </ModalBody>
+                    <ModalFooter>
+
+                        <Button variant="contained" color="primary">Send</Button>
+
+
+                    </ModalFooter>
+                </div>
+
+
+            </Modal>
+        )
     }
 
 }
