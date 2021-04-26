@@ -2,6 +2,7 @@ import React, {Component} from "react";
 
 import {ethers} from "ethers";
 import { makeStyles } from '@material-ui/core/styles';
+
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
@@ -10,7 +11,7 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import Chat from "./Chat";
-import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
+import {Input,Button, Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
 
 
 export default class ListView extends Component{
@@ -26,6 +27,7 @@ export default class ListView extends Component{
             lastMessage: "",
             isMessagePopup: false,
             selectedConversation: {},
+            msg: ""
         }
 
     }
@@ -140,6 +142,8 @@ export default class ListView extends Component{
 
                     </ModalBody>
                     <ModalFooter>
+
+                        <Input name="user message" placeholder="Send a Message!"/>
 
                         <Button variant="contained" color="primary">Send</Button>
 
