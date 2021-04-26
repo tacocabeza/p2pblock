@@ -136,6 +136,7 @@ export default class ListView extends Component{
 
                     <ModalHeader>
                         {this.state.selectedConversation.alias}
+                        <ListItemText secondary={"User Address: " + this.state.selectedConversation.toAddress}> </ListItemText>
                     </ModalHeader>
 
                     <ModalBody>
