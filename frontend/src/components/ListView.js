@@ -2,6 +2,7 @@ import React, {Component} from "react";
 
 import {ethers} from "ethers";
 import { makeStyles } from '@material-ui/core/styles';
+
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
@@ -9,6 +10,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
+import Chat from "./Chat";
+import {Input,Button, Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
 
 
 export default class ListView extends Component{
@@ -22,7 +25,9 @@ export default class ListView extends Component{
             toAddress: "",
             alias: "",
             lastMessage: "",
-            isMessagePopup: false
+            isMessagePopup: false,
+            selectedConversation: {},
+            msg: ""
         }
 
     }
@@ -41,6 +46,8 @@ export default class ListView extends Component{
                 <List className="root">
                     {buffer}
                 </List>
+
+                {this.renderChat()}
 
             </div>
         )
@@ -96,21 +103,127 @@ export default class ListView extends Component{
 
     handleClick(correspondences, index){
 
+        console.log("correspondences", correspondences[index]);
 
-        this.setState({isMessagePopup: true});
 
-        console.log("YOOOOO", correspondences[index].toAddress);
+        this.setState({selectedConversation: correspondences[index]});
 
+
+
+
+        this.toggleChat();
+
+    }
+
+    toggleChat(){
+    this.setState({isMessagePopup: !this.state.isMessagePopup})
     }
 
 
 
-    buildMessageWidget(selectedMessage){
+    renderChat(){
+
+        console.log("selected", this.state.selectedConversation);
+
+
+        console.log(this.state.isMessagePopup);
+        return (
+
+            <Modal  className={{
+                position:'absolute',
+                top:'10%',
+                left:'10%',
+                overflow:'scroll',
+                height:'100%',
+                display:'block'
+            } } isOpen={this.state.isMessagePopup} toggle={() => this.toggleChat()
+            }>
+                <div>
+
+
+                    <ModalHeader>
+                        {this.state.selectedConversation.alias}
+                        <ListItemText secondary={"User Address: " + this.state.selectedConversation.toAddress}> </ListItemText>
+                    </ModalHeader>
+
+                    <ModalBody>
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
 
 
 
+                    </ModalBody>
+                    <ModalFooter>
+
+                        <Input name="user message" placeholder="Send a Message!"/>
+
+                        <Button variant="contained" color="primary">Send</Button>
 
 
+                    </ModalFooter>
+                </div>
+
+
+            </Modal>
+        )
     }
 
 }
