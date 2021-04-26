@@ -129,7 +129,14 @@ export default class ListView extends Component{
         console.log(this.state.isMessagePopup);
         return (
 
-            <Modal  className="vertical-center" isOpen={this.state.isMessagePopup} toggle={() => this.toggleChat()
+            <Modal  className={{
+                position:'absolute',
+                top:'10%',
+                left:'10%',
+                overflow:'scroll',
+                height:'100%',
+                display:'block'
+            } } isOpen={this.state.isMessagePopup} toggle={() => this.toggleChat()
             }>
                 <div>
 
@@ -140,6 +147,68 @@ export default class ListView extends Component{
                     </ModalHeader>
 
                     <ModalBody>
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+                        {"TEST"}<br />
+
+
 
                     </ModalBody>
                     <ModalFooter>
