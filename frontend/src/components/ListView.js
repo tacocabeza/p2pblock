@@ -22,6 +22,7 @@ export default class ListView extends Component{
             toAddress: "",
             alias: "",
             lastMessage: "",
+            isMessagePopup: false
         }
 
     }
@@ -29,11 +30,16 @@ export default class ListView extends Component{
 
     render(){
 
+
+        let buffer = this.insertConversation();
+
+        console.log("buffer",buffer[0]);
+
         return (
             <div className="listStyle">
 
                 <List className="root">
-                    {this.insertConversation()}
+                    {buffer}
                 </List>
 
             </div>
@@ -43,28 +49,68 @@ export default class ListView extends Component{
     insertConversation(){
 
 
+        let buffer = []
 
 
 
-            return(
+        console.log("Correspondences", this.props.correspondences.length);
+        try{
 
 
-                <List className="root">
-                    <ListItem alignItems="flex-start">
+            for(let i = 0; i<this.props.correspondences.length; i++){
 
-                        <ListItemAvatar>
-                            <Avatar alt={this.props.alias}/>
-                        </ListItemAvatar>
-                        <ListItemText primary={this.props.alias}></ListItemText>
-                        <ListItemText
-                            secondary={this.props.msg}
+                buffer.push(
+                    <List className="root">
+                        <ListItem onClick={() => this.handleClick(this.props.correspondences, i)} lignItems="flex-start">
 
-                        />
-                    </ListItem>
-                    <Divider variant="inset" component="li" />
-                </List>
+                            <ListItemAvatar>
+                                <Avatar alt="yeet"/>
+                            </ListItemAvatar>
 
-            )
+
+                            <ListItemText primary={this.props.correspondences[i].alias}/>
+
+                            <ListItemText secondary={"User Address: " + this.props.correspondences[i].toAddress}/>
+
+
+
+                            <ListItemText primary={this.props.correspondences[i].msg}/>
+
+                        </ListItem>
+                        <Divider variant="inset" component="li" />
+                    </List>);
+
+            }
+
+
+
+
+        }catch (e){
+
+        }
+
+
+        return buffer;
+
+    }
+
+    handleClick(correspondences, index){
+
+
+        this.setState({isMessagePopup: true});
+
+        console.log("YOOOOO", correspondences[index].toAddress);
+
+    }
+
+
+
+    buildMessageWidget(selectedMessage){
+
+
+
+
+
     }
 
 }

@@ -14,7 +14,7 @@ export default class Startchat extends Component {
             toAddress: "",
             alias: "",
             msg: "",
-            msgObject: "",
+            correspondences: [],
             isPopUp: false
         }
 
@@ -27,7 +27,7 @@ export default class Startchat extends Component {
 
                 {this.renderStartChatButton()}
                 {this.renderPopUp()}
-                <ListView alias={this.state.alias} msg={this.state.msg} toAddress={this.state.toAddress}>
+                <ListView correspondences={this.state.correspondences}>
 
                 </ListView>
             </div>
@@ -100,6 +100,22 @@ export default class Startchat extends Component {
     }
 
     compose(){
+
+        let currentCorrespondences = this.state.correspondences;
+
+        console.log("Before", currentCorrespondences);
+
+        let newCorrespondence = {alias: this.state.alias, msg: this.state.msg, toAddress: this.state.toAddress};
+
+        currentCorrespondences.push(newCorrespondence);
+
+
+        this.setState({correspondences: currentCorrespondences});
+
+        console.log("After", this.state.correspondences);
+
+
+
 
         try{
             this.props.contract.compose(this.state.toAddress, this.state.msg)

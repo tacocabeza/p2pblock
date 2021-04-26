@@ -65,7 +65,7 @@ export default class Page extends Component {
 
         try{
 
-           console.log("last message", await this.state.contract.getLastMsg("0x58F57681d4C519Dbc30261d4cD080825A55c4380"));
+            console.log("last message", await this.state.contract.getLastMsg("0x58F57681d4C519Dbc30261d4cD080825A55c4380"));
         }
         catch (e) {
             console.log(e)
@@ -95,11 +95,11 @@ export default class Page extends Component {
             <>
                 <div ref={pageTop}/>
 
-                    <Header></Header>
+                <Header></Header>
 
-                    <Startchat createSnackBar={this.props.createSnackBar}
-                    pageTop={pageTop} pageBottom={pageBottom} contract={this.state.contract}/>
-                    <Footer></Footer>
+                <Startchat createSnackBar={this.props.createSnackBar}
+                           pageTop={pageTop} pageBottom={pageBottom} contract={this.state.contract}/>
+                <Footer></Footer>
 
 
                 <div ref={pageBottom}/>
