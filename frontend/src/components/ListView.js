@@ -127,6 +127,7 @@ export default class ListView extends Component{
 
 
         console.log(this.state.isMessagePopup);
+        console.log("contract", this.props.contract);
         return (
 
             <Modal  className={{
