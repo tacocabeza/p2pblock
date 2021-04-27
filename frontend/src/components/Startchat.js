@@ -27,7 +27,8 @@ export default class Startchat extends Component {
 
                 {this.renderStartChatButton()}
                 {this.renderPopUp()}
-                <ListView correspondences={this.state.correspondences}>
+                <ListView correspondences={this.state.correspondences}
+                contract={this.props.contract}>
 
                 </ListView>
             </div>
