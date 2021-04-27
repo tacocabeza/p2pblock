@@ -1,16 +1,11 @@
 import React, {Component} from "react";
 
-import {ethers} from "ethers";
-import { makeStyles } from '@material-ui/core/styles';
-
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
-import Typography from '@material-ui/core/Typography';
-import Chat from "./Chat";
 import {Input,Button, Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
 import {ChatBubble,Message} from "react-chat-ui";
 
@@ -29,7 +24,7 @@ export default class ListView extends Component{
             isMessagePopup: false,
             selectedConversation: {},
             msg: "",
-            sentMessages: [],
+            sentMessages: {},
         }
 
     }
@@ -151,7 +146,7 @@ export default class ListView extends Component{
 
                     <ModalBody>
 
-                        {this.buildSentMessagesList()}
+                        {this.buildSentMessagesList(this.state.selectedConversation.toAddress)}
 
                     </ModalBody>
                     <ModalFooter>
@@ -185,23 +180,37 @@ export default class ListView extends Component{
 
         let currentlySent = this.state.sentMessages;
 
-        currentlySent.push(message)
+        let messages = []
+        currentlySent[to] = messages;
+
+        currentlySent[to].push(message)
 
         this.setState({sentMessages: currentlySent})
 
     }
 
-    buildSentMessagesList() {
+    buildSentMessagesList(to) {
+
+        try{
+
+            let Chatbubbles = [];
+
+            console.log("messages",this.state.sentMessages[to][0])
+            for(let i = 0; i<this.state.sentMessages[to].length; i++){
 
 
-        let Chatbubbles = [];
-        for(let i = 0; i<this.state.sentMessages.length; i++){
 
-                Chatbubbles.push(<ChatBubble message={this.state.sentMessages[i]}></ChatBubble>)
+                Chatbubbles.push(<ChatBubble message={this.state.sentMessages[to][i]}></ChatBubble>)
 
+            }
+
+            return Chatbubbles;
+
+        }catch (e){
+            console.log(e)
         }
 
-        return Chatbubbles;
+
 
 
     }
