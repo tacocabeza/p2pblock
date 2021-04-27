@@ -12,6 +12,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import Chat from "./Chat";
 import {Input,Button, Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
+import {ChatBubble,Message} from "react-chat-ui";
 
 
 export default class ListView extends Component{
@@ -27,7 +28,8 @@ export default class ListView extends Component{
             lastMessage: "",
             isMessagePopup: false,
             selectedConversation: {},
-            msg: ""
+            msg: "",
+            sentMessages: [],
         }
 
     }
@@ -148,75 +150,15 @@ export default class ListView extends Component{
                     </ModalHeader>
 
                     <ModalBody>
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
 
-
+                        {this.buildSentMessagesList()}
 
                     </ModalBody>
                     <ModalFooter>
 
-                        <Input name="user message" placeholder="Send a Message!"/>
+                        <Input name="user message" placeholder="Send a Message!" value={this.state.msg} onChange={e=> this.setState({msg: e.target.value})}/>
 
-                        <Button variant="contained" color="primary" onClick={()=> this.props.contract.compose(this.state.selectedConversation.toAddress, this.state.msg)}>Send</Button>
+                        <Button variant="contained" color="primary" onClick={()=> this.sendMessage(this.state.selectedConversation.toAddress, this.state.msg)}>Send</Button>
 
 
                     </ModalFooter>
@@ -227,4 +169,40 @@ export default class ListView extends Component{
         )
     }
 
+
+    sendMessage(to,msg){
+
+
+        try{
+            this.props.contract.compose(to,msg);
+        }catch (e) {
+            console.log(e);
+        }
+
+        let message = new Message({id: 0, message: this.state.msg});
+
+        console.log("message",message)
+
+        let currentlySent = this.state.sentMessages;
+
+        currentlySent.push(message)
+
+        this.setState({sentMessages: currentlySent})
+
+    }
+
+    buildSentMessagesList() {
+
+
+        let Chatbubbles = [];
+        for(let i = 0; i<this.state.sentMessages.length; i++){
+
+                Chatbubbles.push(<ChatBubble message={this.state.sentMessages[i]}></ChatBubble>)
+
+        }
+
+        return Chatbubbles;
+
+
+    }
 }
