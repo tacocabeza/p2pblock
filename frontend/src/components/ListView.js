@@ -127,7 +127,7 @@ export default class ListView extends Component{
 
 
         console.log(this.state.isMessagePopup);
-        console.log("contract", this.props.contract);
+        console.log("contract boiii", this.props.contract);
         return (
 
             <Modal  className={{
@@ -216,7 +216,7 @@ export default class ListView extends Component{
 
                         <Input name="user message" placeholder="Send a Message!"/>
 
-                        <Button variant="contained" color="primary">Send</Button>
+                        <Button variant="contained" color="primary" onClick={()=> this.props.contract.compose(this.state.selectedConversation.toAddress, this.state.msg)}>Send</Button>
 
 
                     </ModalFooter>
