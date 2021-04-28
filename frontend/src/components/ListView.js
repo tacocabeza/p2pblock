@@ -24,6 +24,7 @@ export default class ListView extends Component{
             isMessagePopup: false,
             selectedConversation: {},
             msg: "",
+            userToMessages: {},
             sentMessages: {},
         }
 
@@ -165,7 +166,37 @@ export default class ListView extends Component{
     }
 
 
+    usrToMessagesMapping(to){
+
+
+        if(this.state.sentMessages[to] == null) {
+
+
+            console.log("working")
+
+            let arr = []
+
+            let map = this.state.sentMessages
+
+
+            map[to] = arr
+
+            this.setState({sentMessages: map});
+        }
+
+
+
+    }
+
     sendMessage(to,msg){
+
+        console.log("before",this.state.sentMessages[to]);
+
+
+        this.usrToMessagesMapping(to);
+
+        console.log("after",this.state.sentMessages[to]);
+
 
 
         try{
@@ -178,17 +209,21 @@ export default class ListView extends Component{
 
         console.log("message",message)
 
+
+        let usrToMessages = this.state.userToMessages;
         let currentlySent = this.state.sentMessages;
 
-        let messages = []
+        let arr = []
 
-        messages.push(message)
+        arr.push = this.state.msg;
 
-        console.log("# of MESSAGES", messages.length)
-        currentlySent[to] = messages;
+        usrToMessages[to] = arr;
 
+        let arrReference = currentlySent[to];
 
-        //currentlySent[to].push(message)
+        console.log(currentlySent[to])
+
+        arrReference.push(message);
 
         this.setState({sentMessages: currentlySent})
 
