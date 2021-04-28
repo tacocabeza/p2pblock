@@ -171,9 +171,7 @@ export default class ListView extends Component{
         )
     }
 
-    componentDidMount() {
-        this.recieveMessage()
-    }
+
 
     usrToMessagesMapping(to){
 
@@ -235,6 +233,8 @@ export default class ListView extends Component{
         arrReference.push(message);
 
         this.setState({sentMessages: currentlySent})
+        this.recieveMessage()
+
 
     }
 
@@ -251,28 +251,21 @@ export default class ListView extends Component{
 
          let timestamp = object[2];
 
-         if(this.state.recievedMessages[from] == null){
-
-
-             let temp = this.state.recievedMessages;
-
-             let arr = [];
-
-             temp[from] = arr;
-
-             this.setState({recievedMessages:temp});
-
-
-         }
 
          let message = new Message({id: 1, message: msg})
 
 
-         let recievedInstance = this.state.recievedMessages;
+         let messagesInstance = this.state.sentMessages;
 
-         let recieved = recievedInstance[from];
+         if(messagesInstance[from] == null){
+             messagesInstance[from] = []
+         }
+
+         let recieved = messagesInstance[from];
 
          recieved.push(message);
+
+         this.setState({sentMessages: messagesInstance});
 
      }
 
