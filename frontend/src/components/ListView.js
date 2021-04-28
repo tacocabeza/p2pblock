@@ -1,17 +1,13 @@
 import React, {Component} from "react";
 
-import {ethers} from "ethers";
-import { makeStyles } from '@material-ui/core/styles';
-
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
-import Typography from '@material-ui/core/Typography';
-import Chat from "./Chat";
 import {Input,Button, Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
+import {ChatBubble,Message} from "react-chat-ui";
 
 
 export default class ListView extends Component{
@@ -27,7 +23,10 @@ export default class ListView extends Component{
             lastMessage: "",
             isMessagePopup: false,
             selectedConversation: {},
-            msg: ""
+            msg: "",
+            userToMessages: {},
+            sentMessages: {},
+            recievedMessages: {}
         }
 
     }
@@ -116,7 +115,11 @@ export default class ListView extends Component{
     }
 
     toggleChat(){
-    this.setState({isMessagePopup: !this.state.isMessagePopup})
+
+        this.setState({isMessagePopup: !this.state.isMessagePopup})
+
+
+
     }
 
 
@@ -148,75 +151,16 @@ export default class ListView extends Component{
                     </ModalHeader>
 
                     <ModalBody>
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
-                        {"TEST"}<br />
 
-
+                        {this.buildSentMessagesList(this.state.selectedConversation.toAddress)}
+                        {this.buildRecievedMessages(this.state.selectedConversation.toAddress)}
 
                     </ModalBody>
                     <ModalFooter>
 
-                        <Input name="user message" placeholder="Send a Message!"/>
+                        <Input name="user message" placeholder="Send a Message!" value={this.state.msg} onChange={e=> this.setState({msg: e.target.value})}/>
 
-                        <Button variant="contained" color="primary" onClick={()=> this.props.contract.compose(this.state.selectedConversation.toAddress, this.state.msg)}>Send</Button>
+                        <Button variant="contained" color="primary" onClick={()=> this.sendMessage(this.state.selectedConversation.toAddress, this.state.msg)}>Send</Button>
 
 
                     </ModalFooter>
@@ -227,4 +171,154 @@ export default class ListView extends Component{
         )
     }
 
+
+
+    usrToMessagesMapping(to){
+
+
+        if(this.state.sentMessages[to] == null) {
+
+
+            console.log("working")
+
+            let arr = []
+
+            let map = this.state.sentMessages
+
+
+            map[to] = arr
+
+            this.setState({sentMessages: map});
+        }
+
+
+
+    }
+
+    sendMessage(to,msg){
+
+        console.log("before",this.state.sentMessages[to]);
+
+
+        this.usrToMessagesMapping(to);
+
+        console.log("after",this.state.sentMessages[to]);
+
+
+
+        try{
+            this.props.contract.compose(to,msg);
+        }catch (e) {
+            console.log(e);
+        }
+
+        let message = new Message({id: 0, message: this.state.msg});
+
+        console.log("message",message)
+
+
+        let usrToMessages = this.state.userToMessages;
+        let currentlySent = this.state.sentMessages;
+
+        let arr = []
+
+        arr.push = this.state.msg;
+
+        usrToMessages[to] = arr;
+
+        let arrReference = currentlySent[to];
+
+        console.log(currentlySent[to])
+
+        arrReference.push(message);
+
+        this.setState({sentMessages: currentlySent})
+        this.recieveMessage()
+
+
+    }
+
+
+     async recieveMessage() {
+
+
+        console.log("userAddress",this.props.userAccount);
+         let object = await this.props.contract.getLastMsg(this.props.userAccount);
+
+         let from = object[0];
+
+         let msg = object[1];
+
+         let timestamp = object[2];
+
+
+         let message = new Message({id: 1, message: msg})
+
+
+         let messagesInstance = this.state.sentMessages;
+
+         if(messagesInstance[from] == null){
+             messagesInstance[from] = []
+         }
+
+         let recieved = messagesInstance[from];
+
+         recieved.push(message);
+
+         this.setState({sentMessages: messagesInstance});
+
+     }
+
+
+
+
+
+
+     buildRecievedMessages(from){
+        try{
+
+            let Chatbubbles = [];
+
+            console.log("# of messages", this.state.recievedMessages[from].length)
+
+            console.log("messages",this.state.recievedMessages[from][0])
+            for(let i = 0; i<this.state.recievedMessages[from].length; i++){
+
+
+
+                Chatbubbles.push(<ChatBubble message={this.state.recievedMessages[from][i]}></ChatBubble>)
+
+            }
+
+            return Chatbubbles;
+
+        }catch (e){
+            console.log(e)
+        }
+    }
+
+    buildSentMessagesList(to) {
+
+        try{
+
+            let Chatbubbles = [];
+
+            console.log("# of messages", this.state.sentMessages[to].length)
+
+            console.log("messages",this.state.sentMessages[to][0])
+            for(let i = 0; i<this.state.sentMessages[to].length; i++){
+
+
+
+                Chatbubbles.push(<ChatBubble message={this.state.sentMessages[to][i]}></ChatBubble>)
+
+            }
+
+            return Chatbubbles;
+
+        }catch (e){
+            console.log(e)
+        }
+
+    }
 }
