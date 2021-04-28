@@ -24,7 +24,6 @@ export default class ListView extends Component{
             isMessagePopup: false,
             selectedConversation: {},
             msg: "",
-            msgs: {},
             sentMessages: {},
         }
 
@@ -181,20 +180,17 @@ export default class ListView extends Component{
 
         let currentlySent = this.state.sentMessages;
 
-        let currMsgs = this.state.msgs;
+        let messages = []
 
-        let msgs =
+        messages.push(message)
 
-        currMsgs.push(message);
-
-        console.log("# of MESSAGES", currMsgs.length)
-        currentlySent[to] = currMsgs;
+        console.log("# of MESSAGES", messages.length)
+        currentlySent[to] = messages;
 
 
         //currentlySent[to].push(message)
 
         this.setState({sentMessages: currentlySent})
-        this.setState({msgs: currMsgs});
 
     }
 
