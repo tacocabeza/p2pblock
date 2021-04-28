@@ -26,6 +26,7 @@ export default class ListView extends Component{
             msg: "",
             userToMessages: {},
             sentMessages: {},
+            recievedMessages: {}
         }
 
     }
@@ -114,7 +115,11 @@ export default class ListView extends Component{
     }
 
     toggleChat(){
-    this.setState({isMessagePopup: !this.state.isMessagePopup})
+
+        this.setState({isMessagePopup: !this.state.isMessagePopup})
+
+
+
     }
 
 
@@ -148,6 +153,7 @@ export default class ListView extends Component{
                     <ModalBody>
 
                         {this.buildSentMessagesList(this.state.selectedConversation.toAddress)}
+                        {this.buildRecievedMessages(this.state.selectedConversation.toAddress)}
 
                     </ModalBody>
                     <ModalFooter>
@@ -165,6 +171,9 @@ export default class ListView extends Component{
         )
     }
 
+    componentDidMount() {
+        this.recieveMessage()
+    }
 
     usrToMessagesMapping(to){
 
@@ -229,6 +238,72 @@ export default class ListView extends Component{
 
     }
 
+
+     async recieveMessage() {
+
+
+        console.log("userAddress",this.props.userAccount);
+         let object = await this.props.contract.getLastMsg(this.props.userAccount);
+
+         let from = object[0];
+
+         let msg = object[1];
+
+         let timestamp = object[2];
+
+         if(this.state.recievedMessages[from] == null){
+
+
+             let temp = this.state.recievedMessages;
+
+             let arr = [];
+
+             temp[from] = arr;
+
+             this.setState({recievedMessages:temp});
+
+
+         }
+
+         let message = new Message({id: 1, message: msg})
+
+
+         let recievedInstance = this.state.recievedMessages;
+
+         let recieved = recievedInstance[from];
+
+         recieved.push(message);
+
+     }
+
+
+
+
+
+
+     buildRecievedMessages(from){
+        try{
+
+            let Chatbubbles = [];
+
+            console.log("# of messages", this.state.recievedMessages[from].length)
+
+            console.log("messages",this.state.recievedMessages[from][0])
+            for(let i = 0; i<this.state.recievedMessages[from].length; i++){
+
+
+
+                Chatbubbles.push(<ChatBubble message={this.state.recievedMessages[from][i]}></ChatBubble>)
+
+            }
+
+            return Chatbubbles;
+
+        }catch (e){
+            console.log(e)
+        }
+    }
+
     buildSentMessagesList(to) {
 
         try{
@@ -251,9 +326,6 @@ export default class ListView extends Component{
         }catch (e){
             console.log(e)
         }
-
-
-
 
     }
 }

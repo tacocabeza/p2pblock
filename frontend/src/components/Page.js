@@ -35,6 +35,7 @@ export default class Page extends Component {
         try {
             userAddress =  await signer.getAddress();
             console.log("user address", userAddress);
+            this.setState({userAccount: userAddress});
         }catch (e) {
             console.log(e)
         }
@@ -98,7 +99,7 @@ export default class Page extends Component {
                 <Header></Header>
 
                 <Startchat createSnackBar={this.props.createSnackBar}
-                           pageTop={pageTop} pageBottom={pageBottom} contract={this.state.contract}/>
+                           pageTop={pageTop} pageBottom={pageBottom} contract={this.state.contract} userAccount={this.state.userAccount}/>
                 <Footer></Footer>
 
 
