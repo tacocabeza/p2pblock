@@ -80,7 +80,6 @@ export default class ListView extends Component{
 
 
 
-                            <ListItemText primary={this.props.correspondences[i].msg}/>
 
                         </ListItem>
                         <Divider variant="inset" component="li" />
