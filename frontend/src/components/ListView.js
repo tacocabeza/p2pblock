@@ -31,6 +31,21 @@ export default class ListView extends Component{
 
     }
 
+    async componentDidMount() {
+
+        this.interval = setInterval(() => this.recieveMessage(), 10000);
+
+        await this.recieveMessage()
+    }
+
+    componentWillUnmount() {
+
+        clearInterval(this.interval);
+    }
+
+
+
+
 
     render(){
 
@@ -152,7 +167,6 @@ export default class ListView extends Component{
                     <ModalBody>
 
                         {this.buildSentMessagesList(this.state.selectedConversation.toAddress)}
-                        {this.buildRecievedMessages(this.state.selectedConversation.toAddress)}
 
                     </ModalBody>
                     <ModalFooter>
@@ -232,7 +246,6 @@ export default class ListView extends Component{
         arrReference.push(message);
 
         this.setState({sentMessages: currentlySent})
-        this.recieveMessage()
 
 
     }
@@ -240,31 +253,37 @@ export default class ListView extends Component{
 
      async recieveMessage() {
 
+        try{
+            console.log("userAddress",this.props.userAccount);
+            let object = await this.props.contract.getLastMsg(this.props.userAccount);
 
-        console.log("userAddress",this.props.userAccount);
-         let object = await this.props.contract.getLastMsg(this.props.userAccount);
+            let from = object[0];
 
-         let from = object[0];
+            let msg = object[1];
 
-         let msg = object[1];
-
-         let timestamp = object[2];
-
-
-         let message = new Message({id: 1, message: msg})
+            let timestamp = object[2];
 
 
-         let messagesInstance = this.state.sentMessages;
+            let message = new Message({id: 1, message: msg})
 
-         if(messagesInstance[from] == null){
-             messagesInstance[from] = []
-         }
 
-         let recieved = messagesInstance[from];
+            let messagesInstance = this.state.sentMessages;
 
-         recieved.push(message);
+            if(messagesInstance[from] == null){
+                messagesInstance[from] = []
+            }
 
-         this.setState({sentMessages: messagesInstance});
+            let recieved = messagesInstance[from];
+
+            recieved.push(message);
+
+            this.setState({sentMessages: messagesInstance});
+
+
+        }catch (e) {
+            console.log(e)
+        }
+
 
      }
 
