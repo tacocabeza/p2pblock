@@ -261,23 +261,37 @@ export default class ListView extends Component{
 
             let msg = object[1];
 
+            console.log("last",this.state.lastMessage)
+            console.log("new", msg);
             let timestamp = object[2];
 
 
-            let message = new Message({id: 1, message: msg})
+            if(this.state.lastMessage != msg){
+
+                console.log("is different",true);
+
+                this.setState({lastMessage:msg})
+                let message = new Message({id: 1, message: msg})
 
 
-            let messagesInstance = this.state.sentMessages;
+                let messagesInstance = this.state.sentMessages;
 
-            if(messagesInstance[from] == null){
-                messagesInstance[from] = []
+                if(messagesInstance[from] == null){
+                    messagesInstance[from] = []
+                }
+
+                let recieved = messagesInstance[from];
+
+                if(recieved.slice(-1)[0] !== message){
+                    console.log(recieved.slice(-1)[0])
+                    console.log("what the fuck",message[1])
+                }
+                recieved.push(message);
+
+                this.setState({sentMessages: messagesInstance});
+
             }
 
-            let recieved = messagesInstance[from];
-
-            recieved.push(message);
-
-            this.setState({sentMessages: messagesInstance});
 
 
         }catch (e) {
