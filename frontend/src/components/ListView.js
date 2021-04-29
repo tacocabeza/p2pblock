@@ -31,6 +31,21 @@ export default class ListView extends Component{
 
     }
 
+    async componentDidMount() {
+
+        this.interval = setInterval(() => this.recieveMessage(), 10000);
+
+        await this.recieveMessage()
+    }
+
+    componentWillUnmount() {
+
+        clearInterval(this.interval);
+    }
+
+
+
+
 
     render(){
 
@@ -80,7 +95,6 @@ export default class ListView extends Component{
 
 
 
-                            <ListItemText primary={this.props.correspondences[i].msg}/>
 
                         </ListItem>
                         <Divider variant="inset" component="li" />
@@ -153,7 +167,6 @@ export default class ListView extends Component{
                     <ModalBody>
 
                         {this.buildSentMessagesList(this.state.selectedConversation.toAddress)}
-                        {this.buildRecievedMessages(this.state.selectedConversation.toAddress)}
 
                     </ModalBody>
                     <ModalFooter>
@@ -233,7 +246,6 @@ export default class ListView extends Component{
         arrReference.push(message);
 
         this.setState({sentMessages: currentlySent})
-        this.recieveMessage()
 
 
     }
@@ -241,31 +253,51 @@ export default class ListView extends Component{
 
      async recieveMessage() {
 
+        try{
+            console.log("userAddress",this.props.userAccount);
+            let object = await this.props.contract.getLastMsg(this.props.userAccount);
 
-        console.log("userAddress",this.props.userAccount);
-         let object = await this.props.contract.getLastMsg(this.props.userAccount);
+            let from = object[0];
 
-         let from = object[0];
+            let msg = object[1];
 
-         let msg = object[1];
-
-         let timestamp = object[2];
-
-
-         let message = new Message({id: 1, message: msg})
+            console.log("last",this.state.lastMessage)
+            console.log("new", msg);
+            let timestamp = object[2];
 
 
-         let messagesInstance = this.state.sentMessages;
+            if(this.state.lastMessage != msg){
 
-         if(messagesInstance[from] == null){
-             messagesInstance[from] = []
-         }
+                console.log("is different",true);
 
-         let recieved = messagesInstance[from];
+                this.setState({lastMessage:msg})
+                let message = new Message({id: 1, message: msg})
 
-         recieved.push(message);
 
-         this.setState({sentMessages: messagesInstance});
+                let messagesInstance = this.state.sentMessages;
+
+                if(messagesInstance[from] == null){
+                    messagesInstance[from] = []
+                }
+
+                let recieved = messagesInstance[from];
+
+                if(recieved.slice(-1)[0] !== message){
+                    console.log(recieved.slice(-1)[0])
+                    console.log("what the fuck",message[1])
+                }
+                recieved.push(message);
+
+                this.setState({sentMessages: messagesInstance});
+
+            }
+
+
+
+        }catch (e) {
+            console.log(e)
+        }
+
 
      }
 

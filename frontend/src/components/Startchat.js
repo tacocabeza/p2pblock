@@ -77,15 +77,13 @@ export default class Startchat extends Component {
                     </ModalHeader>
 
                     <ModalBody>
-                        <Input name="toAddress" placeholder="Recipient" value={this.state.toAddress}
+                        <Input name="toAddress" placeholder="Recipient's address" value={this.state.toAddress}
                                onChange={e => this.setState({toAddress: e.target.value})}/>
-                        <Input name="msg" placeholder="message" value={this.state.msg}
-                               onChange={e => this.setState({msg: e.target.value})}/>
                         <Input name="alias" placeholder="contact name" value={this.state.alias} onChange={e => this.setState({alias:e.target.value})}/>
                     </ModalBody>
                     <ModalFooter>
 
-                        <Button variant="contained" color="primary" disabled={!this.state.toAddress || !this.state.msg || !this.state.alias} onClick={() => this.compose()}> Send </Button>
+                        <Button variant="contained" color="primary" disabled={!this.state.toAddress || !this.state.alias} onClick={() => this.compose()}> Start Chatting! </Button>
 
 
                     </ModalFooter>
@@ -106,7 +104,7 @@ export default class Startchat extends Component {
 
         console.log("Before", currentCorrespondences);
 
-        let newCorrespondence = {alias: this.state.alias, msg: this.state.msg, toAddress: this.state.toAddress};
+        let newCorrespondence = {alias: this.state.alias, toAddress: this.state.toAddress};
 
         currentCorrespondences.push(newCorrespondence);
 
@@ -115,14 +113,6 @@ export default class Startchat extends Component {
 
         console.log("After", this.state.correspondences);
 
-
-
-
-        try{
-            this.props.contract.compose(this.state.toAddress, this.state.msg)
-        }catch (e) {
-            console.log(e);
-        }
 
     }
 
