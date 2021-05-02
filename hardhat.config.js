@@ -9,9 +9,9 @@ but this is a private repo
  */
 require("@nomiclabs/hardhat-waffle");
 
-const INUFRA_PROJ_ID = "872f84c00b664878933265519d0a36e9";
+const INUFRA_PROJ_ID = "YOUR-INUFRA_PROJECT_ID";
 
-const private_key = "828e1ba67b228c2c6f83ff6ebba0f0aa495e9093eccc3fb573b2a3a78dfdd736";
+const private_key = "UR PRIVATE KEY DAWG";
 
 task("accounts", "Prints the list of accounts", async () => {
   const accounts = await ethers.getSigners();
